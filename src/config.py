@@ -66,14 +66,14 @@ class config(object):
     def text(self,t="i"):
         self.tft.text(font1,t,4,4)
     def small(self):
-        self.start.scr.line_height(8)
         self.start.scr.typec=False
-        self.start.scr.h=30
+        self.start.scr.char_y=8
+        self.start.scr.line_height(8)
         self.cls()
     def big(self):
-        self.start.scr.line_height(16)
         self.start.scr.typec=True
-        self.start.scr.h=16
+        self.start.scr.char_y=16
+        self.start.scr.line_height(16)
         self.cls()
         
 
