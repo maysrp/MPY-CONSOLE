@@ -1,4 +1,10 @@
 # MPY-CONSOLE
+### 添加功能
+* 切换壁纸 con.windows() con.ubuntu() con.pao() con.default() con.green()
+* 字体修改 con.small() con.big()
+* wifi设置 con.wifi(名称,密码)
+* 整合shell : shell() 里面的行编辑器 editor a.py 建议使用小字体 con.small()下使用
+
 
 ## 2023.8.7更新——已经实现了micropython的LVGL移植！双固件任选
 
