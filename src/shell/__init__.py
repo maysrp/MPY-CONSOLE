@@ -488,7 +488,7 @@ def shell():
         while True:
             try:
                 input_str = input(
-                    terminal_color("uPyShell", 32) + ":~" + getcwd() + "$ "
+                    terminal_color("*", 32) + ":" + getcwd() + "$ "
                 )
             except KeyboardInterrupt:
                 print('^C')
