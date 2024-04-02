@@ -1,11 +1,12 @@
 import framebuf
 import uio
 import utils.dos_font as font
+import utils.vga1_8x8 as font1
 import st7789
 import os
 
 class FBConsole(uio.IOBase):
-    def __init__(self, fb, bg_color=0, fg_color=-1, width=-1, height=-1, readobj=None,bg=""):
+    def __init__(self, fb, bg_color=0, fg_color=-1, width=-1, height=-1, readobj=None,bg="",typec=True):
         self.readobj = readobj
         self.fb = fb
         if width > 0:
@@ -26,7 +27,11 @@ class FBConsole(uio.IOBase):
         self.fgcolor = fg_color
         self.char_x=8
         self.char_y=16
-        self.line_height(16)
+        self.typec=typec
+        if self.typec:
+            self.line_height(16)
+        else:
+            self.line_height(8)
         self.voffset = 0
         self.bottom_mark=False
         self._n = 0
@@ -73,11 +78,14 @@ class FBConsole(uio.IOBase):
             #self.fb.tft.fill_rect(self.x * self.char_x, self.y * self.lineheight, self.char_y, self.lineheight, st7789.RED)
             if self.bottom_mark:
                 if self.voffset==0:
-                    self.fb.tft.write(font, c, self.x * self.char_x, self.height-self.lineheight, self.fgcolor,self.bgcolor)
+                    self.fb.tft.write(self.font, c, self.x * self.char_x, self.height-self.lineheight, self.fgcolor,self.bgcolor)
                 else:
-                    self.fb.tft.write(font, c, self.x * self.char_x, self.voffset-self.lineheight, self.fgcolor,self.bgcolor)
+                    self.fb.tft.write(self.font, c, self.x * self.char_x, self.voffset-self.lineheight, self.fgcolor,self.bgcolor)
             else:
-                self.fb.tft.write(font, c, self.x * self.char_x, self.y * self.lineheight, self.fgcolor,self.bgcolor)
+                if self.typec:
+                    self.fb.tft.write(font, c, self.x * self.char_x, self.y * self.lineheight, self.fgcolor,self.bgcolor)
+                else:
+                    self.fb.tft.text(font1, c, self.x*8, self.y * self.lineheight, self.fgcolor,self.bgcolor)
             self.x += 1
             if self.x >= self.w:
                 self._newline()
@@ -150,4 +158,3 @@ class FBConsole(uio.IOBase):
             self.fb.tft.hline(self.x * self.char_x, self.voffset-1, self.char_x, color)
         else:
             self.fb.tft.hline(self.x * self.char_x, self.y * self.lineheight + self.char_y-1, self.char_x, color)
-
