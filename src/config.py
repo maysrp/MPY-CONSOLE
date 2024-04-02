@@ -3,7 +3,8 @@ from machine import SoftI2C,Pin,UART,Timer,SPI
 import time
 import network
 import urequests
-
+import utils.vga1_8x8 as font1
+import utils.dos_font as font
 
 
 class config(object):
@@ -62,4 +63,17 @@ class config(object):
         return urequests.get(url)
     def cls(self):
         self.start.scr.cls()
+    def text(self,t="i"):
+        self.tft.text(font1,t,4,4)
+    def small(self):
+        self.start.scr.line_height(8)
+        self.start.scr.typec=False
+        self.start.scr.h=30
+        self.cls()
+    def big(self):
+        self.start.scr.line_height(16)
+        self.start.scr.typec=True
+        self.start.scr.h=16
+        self.cls()
+        
 
