@@ -5,7 +5,7 @@ import st7789
 import os
 
 class FBConsole(uio.IOBase):
-    def __init__(self, fb, bg_color=0, fg_color=-1, width=-1, height=-1, readobj=None):
+    def __init__(self, fb, bg_color=0, fg_color=-1, width=-1, height=-1, readobj=None,bg=""):
         self.readobj = readobj
         self.fb = fb
         if width > 0:
@@ -31,6 +31,7 @@ class FBConsole(uio.IOBase):
         self.bottom_mark=False
         self._n = 0
         self._c = b'x'
+        self.bg=bg
         self.cls()
     
     def _press(self):
@@ -49,7 +50,11 @@ class FBConsole(uio.IOBase):
         self.x = 0
         self.y = 0
         self.y_end = 0
-        self.fb.tft.fill(self.bgcolor)
+#         self.fb.tft.fill(self.bgcolor)
+        if self.bg:
+            self.fb.tft.jpg(self.bg,0,0)
+        else:
+            self.fb.tft.fill(self.bgcolor)
         self.bottom_mark=False
         self.voffset = 0
 
@@ -145,3 +150,4 @@ class FBConsole(uio.IOBase):
             self.fb.tft.hline(self.x * self.char_x, self.voffset-1, self.char_x, color)
         else:
             self.fb.tft.hline(self.x * self.char_x, self.y * self.lineheight + self.char_y-1, self.char_x, color)
+
