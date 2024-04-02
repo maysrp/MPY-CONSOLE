@@ -4,7 +4,7 @@
 * 字体修改 con.small() con.big()
 * wifi设置 con.wifi(名称,密码)
 * 整合shell : shell() 里面的行编辑器 editor a.py 建议使用小字体 con.small()下使用
-* 键盘修改 左边向上箭头开启大写模式;0默认为 = ; alt+0 为 0; $和(为[  $和)为]
+* 键盘修改 左边向上箭头开启大写模式  按键0默认为 =   按键 alt+0 为 0; 按键$和(为[  按键$和)为] 按键sym为tab键，按键sym+按键tab为import快捷输入
 
 
 ## 2023.8.7更新——已经实现了micropython的LVGL移植！双固件任选
