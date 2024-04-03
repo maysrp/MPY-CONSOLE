@@ -385,8 +385,12 @@ def upgrade(urlTar="https://octopusengine.org/download/micropython/stable.tar"):
 
 @command
 def clear():
+    from config import config
+    import start
+    con=config(start)
     print(chr(27) + "[2J")  # clear terminal
     print("\x1b[2J\x1b[H")  # cursor up
+    con.cls()
 
 
 @command
@@ -526,3 +530,4 @@ def shell():
                 print('^C')
             except SystemExit:
                 return
+
