@@ -44,8 +44,8 @@ key_map_sym={
 13:b"\t",6:b'0',5:b' ',2:b'import',17:None,
     }
 key_map_sym_add={
-0:b'#',1:b'1',7:b'2',14:b'3',16:b'[',23:b']',21:b'_',30:b'-',28:b'+',10:b'@',
-3:b'*',8:b'4',9:b'5',20:b'6',15:b'/',22:b':',27:b';',34:b"'",29:b'"',31:b'\x08',
+0:b'#',1:b'1',7:b'2',14:b'3',16:b'[',23:b']',21:b'<',30:b'>',28:b'{',10:b'}',
+3:b'*',8:b'4',9:b'5',20:b'6',15:b'\\',22:b':',27:b';',34:b"'",29:b'"',31:b'\x08',
 4:None,12:b'7',11:b'8',19:b'9',18:b'?',25:b'!',26:b',',33:b'.',32:None,24:b'\r\n',
 13:b"\t",6:b'0',5:b' ',2:b'import',17:None,
     }
@@ -69,10 +69,10 @@ class KEYBOARD():
                 self.upper=False
             elif key_num==17 and not self.upper:
                  self.upper=True
-                 self.bl.on()
+#                  self.bl.on()
             elif key_num==17 and self.upper:
                 self.upper=False
-                self.bl.off()
+#                 self.bl.off()
             elif key_num==32 and not self.sym_add:
                  self.sym_add=True
             elif key_num==32 and self.sym_add:
@@ -91,6 +91,7 @@ class KEYBOARD():
 
             
     
+
 
 
 
