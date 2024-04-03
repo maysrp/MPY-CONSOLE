@@ -75,5 +75,11 @@ class config(object):
         self.start.scr.char_y=16
         self.start.scr.line_height(16)
         self.cls()
+    def key(self):
+        k=Pin(16,Pin.OUT)
+        if k.value():
+            k.value(0)
+        else:
+            k.value(1)
         
 
