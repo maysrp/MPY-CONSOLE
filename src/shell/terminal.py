@@ -38,12 +38,12 @@ def printHead(s):
 
 
 def printTitle(t,w=SEPARATOR_WIDTH):
-    print()
-    print('=' * w)
+#     print()
+#     print('=' * w)
     print("|",end="")
     print(t.center(w-2),end="")
     print("|")
-    print('=' * w)
+#     print('=' * w)
 
 
 def printLog(i,s=""):
@@ -70,3 +70,4 @@ def printInfo():
 def printMachineInfo():
     import machine
     print("> machine.freq: "+str(machine.freq()))
+
