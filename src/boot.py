@@ -22,8 +22,5 @@ if ok.value():
     import start
     start.scr.bgcolor=0
     con=config(start)
-    con.green()
-
-
 
 
