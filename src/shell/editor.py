@@ -11,7 +11,7 @@ edit('/test.py')
 # The MIT License (MIT)
 # Copyright (c) 2016-2020 Jan Copak, Vasek Chalupnicek
 '''
-_page=10
+_page=15
 __version__ = "1.0.0"
 def clear():
     from config import config
@@ -169,7 +169,7 @@ def edit(filename='/main.py'):
         if show_line_numbers:
             title_top_prefix = EDITOR_TITLE_TOP_PREFIX
         all_line=len(copy_buff)
-        allinfo="|A:"+str(all_line)+"|P:"+str(all_line//_page+1)+"|N:"+str(x)
+        allinfo="| A:"+str(all_line)+"| P:"+str(all_line//_page+1)+"| N:"+str(x)
         editor_title = '>>>{:s}{:s}{:s}{:s}<<<'.format(
             filename,
             allinfo,
@@ -216,7 +216,7 @@ def edit(filename='/main.py'):
         line_prefix = ''
         ix=1
         for line in buff:
-            if ix>=(x-1)*_page and ix<_page*x:
+            if ix>=(x-1)*_page and ix<=_page*x:
                 if show_line_numbers:
                     line_cnt += 1
                     line_prefix = EDITOR_LINE_PREFIX_TPL.format(line_cnt)
@@ -467,4 +467,3 @@ if __name__ == '__main__':
         edit(sys.argv[1])
     else:
         edit()
-
