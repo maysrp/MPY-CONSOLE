@@ -20,7 +20,8 @@ def light(t):
 if ok.value():
     ok.irq(trigger=Pin.IRQ_RISING, handler=light)
     import start
-    start.scr.bgcolor=0
     con=config(start)
+
+
 
 
