@@ -20,7 +20,7 @@ last update:
 __version__ = "0.33.3-20200630"  # 533
 
 # toto: kill, wget/wsend?, ...
-SEPARATOR_WIDTH = 50
+SEPARATOR_WIDTH = 40
 
 _command_registry = {}
 _background_jobs = {}
@@ -103,6 +103,7 @@ def cat(file='/main.py', title=1):  # concatenate - prepare
     """print data: f("filename") """
     fi = open(file, 'r')
     num=int(title)
+    clear()
     if title==1:
         from .terminal import printTitle
         printTitle("file > " + file)
@@ -115,18 +116,17 @@ def cat(file='/main.py', title=1):  # concatenate - prepare
             lines = lines + 1
             words = words + len(wordslist)
             characters = characters + len(line)
-        print("Statistic > lines: " + str(lines) + " | words: " + str(
-            words) + " | chars: " + str(characters))
+        print("lines:" + str(lines) + " |words: " + str(
+            words) + "|chars:" + str(characters))
         print('-' * SEPARATOR_WIDTH)
         fi = open(file, 'r')
     i=0
     for line in fi:
-        if i>(num-1)*25 and i<num*25:
-            print(i," ",line, end="")
+        if i>=(num-1)*16 and i<num*16:
+            print(i,line, end="")
         i=i+1
     print()
     globals()["cat"] = cat
-
 
 @command
 def edit(file="/main.py"):
