@@ -236,11 +236,117 @@ def edit(filename='/main.py'):
 #             terminal_color(bottom_prefix),
 #             terminal_color('─' * (EDITOR_WIDTH - len(bottom_prefix)))
 #         ))
+    def print_line5(x):
+        clear()
+        '''
+        Print current state of the file in editor memory
+        '''
+        nonlocal show_line_numbers, changed, file_exists, buff
+
+        EDITOR_WIDTH = 40
+        LINE_NO_DIGITS = 2
+        EDITOR_LINE_PREFIX_TPL = '{:>' + str(LINE_NO_DIGITS) + 'd}│'
+        EDITOR_TITLE_TOP_PREFIX = ' ' * LINE_NO_DIGITS + '┌'
+        EDITOR_TITLE_TOP_SUFIX  = '┐'
+        EDITOR_TITLE_PREFIX     = ' ' * LINE_NO_DIGITS + '│'
+        EDITOR_TITLE_SPACER     = '  '
+        EDITOR_TITLE_SUFIX      = '│'
+        EDITOR_TOP_PREFIX       = ' ' * LINE_NO_DIGITS + '├'
+        EDITOR_TOP_TITLE_SUFIX  = '┴'
+        EDITOR_BOTTOM_PREFIX    = ' ' * LINE_NO_DIGITS + '└'
+
+        # find the longest line in the buffer
+        max_len = 0
+        for line in buff:
+            l = len(line)
+            if l > max_len:
+                max_len = l
+        if max_len > EDITOR_WIDTH:
+            EDITOR_WIDTH = max_len
+        copy_buff=buff.copy()
+        if show_line_numbers:
+            EDITOR_WIDTH += len(EDITOR_TITLE_PREFIX)
+
+        #     ┌────────────────────────────┐
+        #     │  /test.py [NEW] [CHANGED]  │
+        #     ├────────────────────────────┴─────────
+
+        title_top_prefix = ''
+        if show_line_numbers:
+            title_top_prefix = EDITOR_TITLE_TOP_PREFIX
+        all_line=len(copy_buff)
+        allinfo=" A:"+str(all_line)+" P:"+str(all_line//5+1)+" N:"+str(x)
+        editor_title = '>>>{:s}{:s}{:s}{:s}<<<'.format(
+            filename,
+            allinfo,
+            not file_exists and ' [NEW]' or '',
+            file_exists and changed and ' [CHANGED]' or '',
+        )
+
+        title_border = '─' * (len(editor_title) + 2 * len(EDITOR_TITLE_SPACER))
+
+        title_prefix = ''
+        if show_line_numbers:
+            title_prefix = EDITOR_TITLE_PREFIX
+
+        top_prefix = ''
+        if show_line_numbers:
+            top_prefix = EDITOR_TOP_PREFIX
+        
+        title_border_after = '─' * (EDITOR_WIDTH - len(top_prefix) - len(title_border) - len(EDITOR_TOP_TITLE_SUFIX))
+
+#         print()
+#         print('{:s}{:s}{:s}'.format(
+#             terminal_color(title_top_prefix),
+#             terminal_color(title_border),
+#             terminal_color(EDITOR_TITLE_TOP_SUFIX)
+#         ))
+        print('{:s}{:s}{:s}{:s}{:s}'.format(
+            terminal_color(title_prefix),
+            EDITOR_TITLE_SPACER,
+            editor_title,
+            EDITOR_TITLE_SPACER,
+            terminal_color(EDITOR_TITLE_SUFIX)
+        ))
+#         print('{:s}{:s}{:s}{:s}'.format(
+#             terminal_color(top_prefix),
+#             terminal_color(title_border),
+#             terminal_color(EDITOR_TOP_TITLE_SUFIX),
+#             terminal_color(title_border_after)
+#         ))
+
+        #    1│
+        #    2│
+        #    ...
+        line_cnt = 0+(x-1)*5
+        line_prefix = ''
+        ix=1
+        for line in buff:
+            if ix>=(x-1)*5 and ix<=5*x:
+                if show_line_numbers:
+                    line_cnt += 1
+                    line_prefix = EDITOR_LINE_PREFIX_TPL.format(line_cnt)
+                print('{:s}{:s}'.format(terminal_color(line_prefix), line))
+            ix=ix+1
+        # newline at the end of the file
+        if show_line_numbers:
+            line_cnt += 1
+            line_prefix = EDITOR_LINE_PREFIX_TPL.format(line_cnt)
+        print('{:s}'.format(terminal_color(line_prefix)))
+
+        #    └─────────────────────────────────────
+        bottom_prefix = ''
+        if show_line_numbers:
+            bottom_prefix = EDITOR_BOTTOM_PREFIX
+#         print('{:s}{:s}'.format(
+#             terminal_color(bottom_prefix),
+#             terminal_color('─' * (EDITOR_WIDTH - len(bottom_prefix)))
+#         ))
 
     def print_help():
         print('  h      print this help')
         print('  p      print file (current state in buffer)')
-        print('  k<int>   show 10n line')
+        print('  k<int>   show 16*n line t<int> show 6*n')
         print('  l      toggle line numbers (copy mode)')
         print('  q      quit')
         print('  q! x   quit without saving changes')
@@ -316,6 +422,11 @@ def edit(filename='/main.py'):
             if not line_no:
                 line_no=1
             print_line(line_no)
+        elif action.startswith('t'):
+            line_no, txt = parse_line_no_txt(action[1:])
+            if not line_no:
+                line_no=1
+            print_line5(line_no)
         # action edit one line
         elif action.startswith('e'):
             line_no, txt = parse_line_no_txt(action[1:])
@@ -467,3 +578,4 @@ if __name__ == '__main__':
         edit(sys.argv[1])
     else:
         edit()
+
