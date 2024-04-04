@@ -25,7 +25,7 @@ SEPARATOR_WIDTH = 40
 _command_registry = {}
 _background_jobs = {}
 _wc = None  # global wifi_connect
-
+_page=15
 
 def _thread_wrapper(func, job_id, *arguments):
     try:
@@ -103,6 +103,7 @@ def cat(file='/main.py', title=1):  # concatenate - prepare
     """print data: f("filename") """
     fi = open(file, 'r')
     num=int(title)
+    page=_page
     clear()
     if title==1:
         from .terminal import printTitle
@@ -116,13 +117,13 @@ def cat(file='/main.py', title=1):  # concatenate - prepare
             lines = lines + 1
             words = words + len(wordslist)
             characters = characters + len(line)
-        print("lines:" + str(lines) + " |words: " + str(
-            words) + "|chars:" + str(characters))
+        print(">>>lines:" + str(lines) + " |words: " + str(
+            words) + "|chars:" + str(characters)+"<<<")
         print('-' * SEPARATOR_WIDTH)
         fi = open(file, 'r')
-    i=0
+    i=1
     for line in fi:
-        if i>=(num-1)*16 and i<num*16:
+        if i>=(num-1)*page and i<num*page:
             print(i,line, end="")
         i=i+1
     print()
@@ -135,13 +136,15 @@ def edit(file="/main.py"):
 
 
 @command
-def ls(directory="", line=False, cols=2, goPrint=True):
+def ls(directory="", title=1, cols=2, goPrint=True):
+    page=_page
     from .terminal import terminal_color
+    line=int(title)
     debug = False
     # if goPrint: printTitle("list > " + directory)
     # from os import listdir
     from uos import ilistdir
-    from os import stat
+    from os import stat,listdir
     ls_all = ilistdir(directory)
     if debug:
         print(directory)
@@ -149,28 +152,32 @@ def ls(directory="", line=False, cols=2, goPrint=True):
     # ls.sort()
     if goPrint:
         col = 0
-        print("%8s %s " % ("d/[B]", "name"))
+#         print("%8s %s " % ("d/[B]", "name"))
+        allz=len(listdir(directory))
+        print("All:",allz,"files",allz//page+1,"page Now:",line)
+        i=0
         for f in ls_all:
-            if f[1] == 16384:
-                # print(terminal_color(str(f[0])))
-                print("%8s %s " % ("---", terminal_color(str(f[0]))))
+            if i>=(line-1)*page and i<line*page:
+                if f[1] == 16384:
+                    # print(terminal_color(str(f[0])))
+                    print("%8s %s " % ("---", terminal_color(str(f[0]))))
 
-            if f[1] == 32768:
-                # print(str(f[0]) + "" + str(stat(f[0])[6]))
-                try:
-                    print(
-                        "%8s %s" % (str(stat(f[0])[6]), terminal_color(str(f[0]), 36)))
-                except:
-                    # print("%8s %s" % ( str(stat(directory+f[0])[6]), terminal_color(str(f[0]),36)))
-                    print("%8s %s" % ("?", terminal_color(str(f[0]), 36)))
+                if f[1] == 32768:
+                    # print(str(f[0]) + "" + str(stat(f[0])[6]))
+                    try:
+                        print(
+                            "%8s %s" % (str(stat(f[0])[6]), terminal_color(str(f[0]), 36)))
+                    except:
+                        # print("%8s %s" % ( str(stat(directory+f[0])[6]), terminal_color(str(f[0]),36)))
+                        print("%8s %s" % ("?", terminal_color(str(f[0]), 36)))
 
-            """if line:
-                print("%25s" %  f,end="")
-                col += 1
-                if col % cols:
-                    print()
-            else:"""
-        print()
+                """if line:
+                    print("%25s" %  f,end="")
+                    col += 1
+                    if col % cols:
+                        print()
+                else:"""
+            i=i+1
     return ls
     # globals()["ls"]=ls
 
