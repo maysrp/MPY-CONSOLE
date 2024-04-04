@@ -4,7 +4,7 @@
 
 # from shell.terminal import printTitle
 
-SEPARATOR_WIDTH = 50
+SEPARATOR_WIDTH = 40
 
 
 def terminal_color(txt,col=33): # default yellow
