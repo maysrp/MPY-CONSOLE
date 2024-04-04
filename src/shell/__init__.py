@@ -138,6 +138,7 @@ def edit(file="/main.py"):
 @command
 def ls(directory="", title=1, cols=2, goPrint=True):
     page=_page
+    clear()
     from .terminal import terminal_color
     line=int(title)
     debug = False
