@@ -126,7 +126,7 @@ def cat(file='/main.py', title=1):  # concatenate - prepare
         if i>=(num-1)*page and i<num*page:
             print(i,line, end="")
         i=i+1
-    print()
+    print('-' * SEPARATOR_WIDTH)
     globals()["cat"] = cat
 
 @command
