@@ -16,7 +16,7 @@ kb=KEYBOARD()
 # screen.tft.jpg('logo.jpg',0,0)
 # time.sleep(1)
 theme=color.COLOR_CANDY
-scr = FBConsole(screen,bg_color=theme['bg'],fg_color=theme['font'],bg="windows.jpg")
+scr = FBConsole(screen,bg_color=theme['bg'],fg_color=theme['font'],bg=False)
 os.dupterm(scr)   
 print('MPY CONSOLE 1.00 by jd3096')
 print('WELCOM! '+NAME)
