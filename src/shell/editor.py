@@ -138,7 +138,7 @@ def edit(filename='/main.py'):
         nonlocal show_line_numbers, changed, file_exists, buff
 
         EDITOR_WIDTH = 40
-        LINE_NO_DIGITS = 4
+        LINE_NO_DIGITS = 2
         EDITOR_LINE_PREFIX_TPL = '{:>' + str(LINE_NO_DIGITS) + 'd}│'
         EDITOR_TITLE_TOP_PREFIX = ' ' * LINE_NO_DIGITS + '┌'
         EDITOR_TITLE_TOP_SUFIX  = '┐'
