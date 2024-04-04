@@ -169,7 +169,7 @@ def edit(filename='/main.py'):
         if show_line_numbers:
             title_top_prefix = EDITOR_TITLE_TOP_PREFIX
         all_line=len(copy_buff)
-        allinfo="| A:"+str(all_line)+"| P:"+str(all_line//_page+1)+"| N:"+str(x)
+        allinfo=" A:"+str(all_line)+" P:"+str(all_line//_page+1)+" N:"+str(x)
         editor_title = '>>>{:s}{:s}{:s}{:s}<<<'.format(
             filename,
             allinfo,
