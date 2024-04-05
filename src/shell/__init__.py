@@ -99,13 +99,13 @@ def ifconfig():
 
 
 @command
-def cat(file='/main.py', title=1):  # concatenate - prepare
+def cat(file='/main.py', title=1,mk=15):  # concatenate - prepare
     """print data: f("filename") """
     fi = open(file, 'r')
     num=int(title)
-    page=_page
+    page=int(mk)
     clear()
-    if title==1:
+    if True:
         from .terminal import printTitle
         printTitle("file > " + file)
         # file statistic
@@ -117,8 +117,8 @@ def cat(file='/main.py', title=1):  # concatenate - prepare
             lines = lines + 1
             words = words + len(wordslist)
             characters = characters + len(line)
-        print(">>>lines:" + str(lines) + " |words: " + str(
-            words) + "|chars:" + str(characters)+"<<<")
+        print(">>>L:" + str(lines) + " W:" + str(
+            words) + " C:" + str(characters)+" Page:"+str(lines//page+1)+" Now:"+str(title)+"<<<")
         print('-' * SEPARATOR_WIDTH)
         fi = open(file, 'r')
     i=1
@@ -126,6 +126,7 @@ def cat(file='/main.py', title=1):  # concatenate - prepare
         if i>=(num-1)*page and i<num*page:
             print(i,line, end="")
         i=i+1
+    print()
     print('-' * SEPARATOR_WIDTH)
     globals()["cat"] = cat
 
