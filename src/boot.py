@@ -4,7 +4,6 @@ import shell as sh
 ok=Pin(8,Pin.IN,Pin.PULL_UP)
 freq(240000000)
 def shell():
-    con.green()
     con.small()
     con.cls()
     sh.shell()
@@ -21,7 +20,3 @@ if ok.value():
     ok.irq(trigger=Pin.IRQ_RISING, handler=light)
     import start
     con=config(start)
-
-
-
-
