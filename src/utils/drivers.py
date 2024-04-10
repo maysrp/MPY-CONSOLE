@@ -1,6 +1,8 @@
 #ST7789
 from machine import Pin, SPI, freq
 import st7789
+import sdcard 
+import os
 
 class SCREEN():
     def __init__(self, width, height):
@@ -88,9 +90,12 @@ class KEYBOARD():
             else:
                 return key_map[key_num]
             
+class SDCARD():
+    def __init__(self):        
+        self.spi = machine.SPI(1,baudrate=20000000, sck=Pin(13), mosi=Pin(12), miso=Pin(14))
+        self.sd = sdcard.SDCard(spi,Pin(11))
+        os.mount(sd, '/sd')
 
-            
-    
 
 
 
